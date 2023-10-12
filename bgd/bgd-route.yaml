@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bgd
   name: bgd
-  namespace: bgd
+  namespace: ibm-chatops-test
 spec:
   host: ""
   port:
