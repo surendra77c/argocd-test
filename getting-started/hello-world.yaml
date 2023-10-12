@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: bhargavshah86/kube-test:v0.1
+        image: arungupta/helloworld-spring-boot:latest
         ports:
         - containerPort: 80
         resources:
