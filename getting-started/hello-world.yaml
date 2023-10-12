@@ -1,31 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-deployment
-  labels:
-    app: hello-world
+  name: helloworld
 spec:
   selector:
     matchLabels:
-      app: hello-world
-  replicas: 1
-  template:
+      app: helloworld
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
     metadata:
       labels:
-        app: hello-world
+        app: helloworld
     spec:
       containers:
-      - name: hello-world
-        image: arungupta/helloworld-spring-boot:latest
+      - name: helloworld
+        image: karthequian/helloworld:latest
         ports:
         - containerPort: 80
-        resources:
-          limits:
-            memory: 256Mi
-            cpu: "250m"
-          requests:
-            memory: 128Mi
-            cpu: "80m"
 ---
 apiVersion: v1
 kind: Service
