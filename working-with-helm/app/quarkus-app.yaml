@@ -2,11 +2,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ibm-chatops-test
+  name: demo-chatops-test
   namespace: argocd
 spec:
   destination:
-    namespace: demo
+    namespace: ibm-chatops-test
     server: https://kubernetes.default.svc
   project: default
   source:
