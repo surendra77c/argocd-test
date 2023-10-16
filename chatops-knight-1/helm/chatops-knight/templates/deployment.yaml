@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chatops-knight.fullname" . }}
+  labels:
+{{ include "chatops-knight.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "chatops-knight.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "chatops-knight.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- if .Values.global.hostalias.ckenabled }}
+      hostAliases:
+      - ip: "{{ .Values.global.hostalias.ckhostip }}"
+        hostnames:
+        - "{{ .Values.global.hostalias.ckhostalias }}"
+    {{- end }}
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}{{ .Values.global.branchversion }}:{{ .Values.global.imageversion}}"
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - curl -k -s -f https://localhost:3000/ping --max-time 180 --connect-timeout 30
+            initialDelaySeconds: 5
+            periodSeconds: 120
+            timeoutSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - /home/node/app/healthcheck.sh
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 10
+          env:
+          - name: CHATOPS_STOREMSURL
+            value: 'https://chatops-store:3000/'
+          - name: NAMESPACE
+            value: {{ .Values.global.namespace }}
+          - name: MS_NAME
+            value: 'chatops-knight'
+          - name: MS_ENCRYPTION_KEY
+            valueFrom:
+              secretKeyRef:
+                key:  MS_ENCRYPTION_KEY
+                name: chatops-encryption-secret
+          - name: NODE_ENV
+            value: {{ .Values.global.prodInstanceValue }}
+          - name: https_proxy
+            value: {{ .Values.global.httpproxy }}
+          - name: http_proxy
+            value: {{ .Values.global.httpproxy }}
+          - name: no_proxy
+            value: {{ .Values.global.noproxy }}
+          - name: EVENT_STREAM
+            value: {{ .Values.global.EVENT_STREAM }}
+          - name: VAULT_KEY_SHARES
+            value: {{ .Values.global.VAULT_KEY_SHARES }}
+          - name: REDIS_USER
+            value: {{ .Values.global.REDIS_USER }}
+          - name: REDIS_PASSWORD
+            value: {{ .Values.global.REDIS_PASSWORD }}  
+          - name: VAULT_ROLE_ID
+            value: {{ .Values.global.VAULT_ROLE_ID }}
+          - name: VAULT_SECRET_ID
+            value: {{ .Values.global.VAULT_SECRET_ID }}
+          - name: MUI_URL
+            value: {{ .Values.global.MUI_URL }}  
+          - name: GEO
+            value: {{ .Values.global.geo | quote }}
+          - name: ROUTING_GEO
+            value: {{ .Values.global.routing_geo | quote }}  
+          - name: DISABLE_METRICS
+            value: {{ .Values.global.disable_metrics | quote }}        
+          - name: SAT_ROUTING_ENABLED
+            value: {{ .Values.global.sat_routing_enabled | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}    
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

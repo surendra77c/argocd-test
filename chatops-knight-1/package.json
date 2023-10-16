@@ -1,0 +1,91 @@
+{
+  "name": "chatops-knight",
+  "version": "1.0.0",
+  "description": "chatops knight",
+  "keywords": [
+    "loopback-application",
+    "loopback"
+  ],
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=8.9"
+  },
+  "scripts": {
+    "precoverage": "lb-nyc npm test",
+    "coverage": "lb-nyc report --reporter=html --reporter=json --report-dir=reports/coverage",
+    "postcoverage": "mkdir reports/coverage/code && cp -fr src/* reports/coverage/code",
+    "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
+    "test": "npm run mocha --scripts-prepend-node-path",
+    "pretest": " rm -rf src/__tests__ &&  cp -fr tests/* src/ && npm run clean && npm run build",
+    "posttest": "",
+    "test:ci": "lb-nyc npm run mocha --scripts-prepend-node-path",
+    "mocha": "lb-mocha --allow-console-logs --reporter=mochawesome --exit \"dist/__tests__\" --reporter-options reportDir=reports/test-reports,reportFilename=TestReports",
+    "build": "npm run lint && lb-tsc",
+    "debug": "./../../devinit.sh && npm run lint && npm install ./lib/msutils-1.0.0.tgz && npm install && npm run build && node --nolazy --inspect-brk=9229 .",
+    "build:watch": "lb-tsc --watch",
+    "clean": "lb-clean lib dist *.tsbuildinfo *.log",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint --fix",
+    "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
+    "docker:build": "./../../devinit.sh && npm run lint && npm install ./lib/msutils-1.0.0.tgz && npm install && docker build -t chatops-knight .",
+    "docker:run": "./../../devinit.sh && npm run lint && npm install ./lib/msutils-1.0.0.tgz && npm install && docker run -p 3000:3000 -d chatops-knight",
+    "migrate": "node ./dist/migrate",
+    "prestart": "npm run build",
+    "start": "./../../devinit.sh && node -r source-map-support/register .",
+    "dev": "nodemon --legacy-watch -e ts --exec \"lb-tsc && node -r source-map-support/register .\"",
+    "prepublishOnly": "npm run test"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "",
+  "private": true,
+  "license": "",
+  "files": [
+    "README.md",
+    "index.js",
+    "index.d.ts",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "dependencies": {
+    "@loopback/boot": "^3.4.1",
+    "@loopback/context": "^2.1.1",
+    "@loopback/core": "^2.16.1",
+    "@loopback/openapi-v3": "^2.0.0",
+    "@loopback/repository": "^3.7.0",
+    "@loopback/rest": "^9.3.1",
+    "@loopback/rest-explorer": "^3.3.4",
+    "@loopback/service-proxy": "^3.2.1",
+    "bluebird": "^3.7.2",
+    "bull": "^3.12.1",
+    "hashi-vault-js": "^0.4.1",
+    "is-port-reachable": "^3.0.0",
+    "json-query": "^2.2.2",
+    "lodash": "^4.17.21",
+    "loopback-connector-rest": "^3.6.0",
+    "mochawesome": "^7.0.1",
+    "msutils": "file:lib/msutils-1.0.0.tgz",
+    "redis": "^3.1.2",
+    "uuid": "^7.0.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@loopback/build": "^6.4.1",
+    "@loopback/eslint-config": "^10.2.1",
+    "@loopback/testlab": "^3.4.1",
+    "@types/bull": "^3.12.0",
+    "@types/node": "^10.17.15",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "eslint": "^7.28.0",
+    "nodemon": "^2.0.19",
+    "source-map-support": "^0.5.16",
+    "typescript": "~4.3.2"
+  }
+}

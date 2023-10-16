@@ -1,0 +1,9 @@
+node_modules/
+dist/
+coverage/
+.eslintrc.js
+tests/
+src/__tests__/
+reports/
+index.js
+index.ts

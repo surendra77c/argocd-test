@@ -1,0 +1,712 @@
+{
+  "name": "chatopsknight",
+  "connector": "rest",
+  "debug": true,
+  "options": {
+    "timeout": 15000
+  },
+  "strictSSL": false,
+  "operations": [
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/updateChannelIdInTicketingSystem",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "accountCode": "{accountCode}",
+          "eventid": "{eventid}",
+          "ticketid": "{ticketid}",
+          "channelid": "{channelid}",
+          "channelname": "{channelname}",
+          "channelurl": "{channelurl}"        
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "updateChannelIdInTicketingSystem": [
+          "url",
+          "transactionid",
+          "accountCode",
+          "eventid",
+          "ticketid",
+          "channelid",
+          "channelname",
+          "channelurl"
+        ]
+      }
+    },
+    {
+    "template": {
+      "method": "POST",
+      "url": "{url}/getTicketDetails",
+      "headers": {
+        "accept": "application/json",
+        "Content-Type": "application/json",
+        "transactionid":"{transactionid}"
+      },
+      "body": {
+        "accountCode": "{accountCode}",
+        "ticketid": "{ticketid}",
+        "msgRequest":"{msgRequest}"        
+      },
+      "responsePath": "$"
+    },
+    "functions": {
+      "getTicketDetails": [
+        "url",
+        "transactionid",
+        "accountCode",
+        "ticketid",
+        "msgRequest"
+      ]
+    }
+  },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/assignResourceToChannel",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "resourceids": "{resourceids}",
+          "channelid": "{channelid}",
+          "accountCode": "{accountCode}"
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "assignResourceToChannel": [
+          "url",
+          "transactionid",
+          "resourceids",
+          "channelid",
+          "accountCode"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/getAssigneeDetails",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "channelid": "{channelid}",
+          "accountCode": "{accountCode}",
+          "ticketid": "{ticketid}" ,
+          "mappedRule":"{mappedRule}"
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "assignOwnerToCollaborator": [
+          "url",
+          "transactionid",
+          "channelid",
+          "accountCode",
+          "ticketid",
+          "mappedRule"
+        ]
+      }
+    },
+    {
+    "template": {
+      "method": "POST",
+      "url": "{url}/getPagerDutyAssigneeDetails",
+      "headers": {
+        "accept": "application/json",
+        "Content-Type": "application/json",
+        "transactionid": "{transactionid}"
+      },
+      "body": {
+        "channelid": "{channelid}",
+        "accountCode": "{accountCode}",
+        "ticketid": "{ticketid}",
+        "pagerDutyAssignments": "{pagerDutyAssignments}"
+      },
+      "responsePath": "$"
+    },
+    "functions": {
+      "assignPagerDutyOwnerToCollaborator": [
+        "url",
+        "transactionid",
+        "channelid",
+        "accountCode",
+        "ticketid",
+        "pagerDutyAssignments"
+      ]
+    }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/getGnmGroupDetails",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "channelid": "{channelid}",
+          "accountCode": "{accountCode}",
+          "createRequest": "{createRequest}" ,
+          "mappedRule":"{mappedRule}"
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "assignGnmGrpToCollaborator": [
+          "url",
+          "transactionid",
+          "channelid",
+          "accountCode",
+          "createRequest",
+          "mappedRule"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Authorization": "{basicAuthToken}",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"channelid\": \"{channelid}\", \"channelname\": \"{channelname}\", \"incidentid\": \"{ticketid}\", \"channelurl\": \"{channelurl}\", \"workspaceid\": \"{workspaceid}\", \"accountcodelocators\": {accountCodeLocators}, \"accountCodeLocators\": {accountCodeLocators}, \"transactionid\": \"{transactionid}\" }"
+      },
+      "functions": {
+        "sendbackChannelInfoWithBasicAuth": [
+          "basicAuthToken",
+          "url",
+          "accountCodeLocators",
+          "transactionid",
+          "channelid",
+          "channelname",
+          "ticketid",
+          "channelurl",
+          "workspaceid"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Username": "{userName}",
+          "APIkey": "{apiKey}",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"channelid\": \"{channelid}\", \"channelname\": \"{channelname}\", \"incidentid\": \"{ticketid}\", \"channelurl\": \"{channelurl}\", \"workspaceid\": \"{workspaceid}\", \"accountcodelocators\": {accountCodeLocators}, \"accountCodeLocators\": {accountCodeLocators}, \"transactionid\": \"{transactionid}\" }"
+      },
+      "functions": {
+        "sendbackChannelInfoWithApiKey": [
+          "userName",
+          "apiKey",
+          "url",
+          "accountCodeLocators",
+          "transactionid",
+          "channelid",
+          "channelname",
+          "ticketid",
+          "channelurl",
+          "workspaceid"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"channelid\": \"{channelid}\", \"channelname\": \"{channelname}\", \"incidentid\": \"{ticketid}\", \"channelurl\": \"{channelurl}\", \"workspaceid\": \"{workspaceid}\", \"accountCodeLocators\": {accountCodeLocators} }"
+      },
+      "functions": {
+        "sendbackChannelInfoWithoutAuth": [
+          "url",
+          "accountCodeLocators",
+          "transactionid",
+          "channelid",
+          "channelname",
+          "ticketid",
+          "channelurl",
+          "workspaceid"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Authorization": "{basicAuthToken}",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"channelid\": \"{channelid}\", \"channelname\": \"{channelname}\", \"ticketid\": \"{ticketid}\", \"channelurl\": \"{channelurl}\", \"workspaceid\": \"{workspaceid}\", \"accountCodeLocators\": {accountCodeLocators} }"
+      },
+      "functions": {
+        "sendbackTicketChannelInfoWithBasicAuth": [
+          "basicAuthToken",
+          "url",
+          "accountCodeLocators",
+          "transactionid",
+          "channelid",
+          "channelname",
+          "ticketid",
+          "channelurl",
+          "workspaceid"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Username": "{userName}",
+          "APIkey": "{apiKey}",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"channelid\": \"{channelid}\", \"channelname\": \"{channelname}\", \"ticketid\": \"{ticketid}\", \"channelurl\": \"{channelurl}\", \"workspaceid\": \"{workspaceid}\", \"accountCodeLocators\": {accountCodeLocators} }"
+      },
+      "functions": {
+        "sendbackTicketChannelInfoWithApiKey": [
+          "userName",
+          "apiKey",
+          "url",
+          "accountCodeLocators",
+          "transactionid",
+          "channelid",
+          "channelname",
+          "ticketid",
+          "channelurl",
+          "workspaceid"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"channelid\": \"{channelid}\", \"channelname\": \"{channelname}\", \"ticketid\": \"{ticketid}\", \"channelurl\": \"{channelurl}\", \"workspaceid\": \"{workspaceid}\", \"accountCodeLocators\": {accountCodeLocators} }"
+      },
+      "functions": {
+        "sendbackTicketChannelInfoWithoutAuth": [
+          "url",
+          "accountCodeLocators",
+          "transactionid",
+          "channelid",
+          "channelname",
+          "ticketid",
+          "channelurl",
+          "workspaceid"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/initiateChatOpsTicketProcess",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "accountCode": "{accountCode}",
+          "eventid": "{eventid}",
+          "ticketid": "{ticketid}",
+          "tickettype": "{tickettype}",
+          "ticketpriority": "{ticketpriority}",
+          "ticketdesc": "{ticketdesc}",
+          "ticketimpact": "{ticketimpact}",
+          "ticketassignmentgroups": "{ticketassignmentgroups}",        
+          "environment": "{environment}", 
+          "defaultassignments":"{defaultassignments}",  
+          "externalcallbackaddress": "{externalcallbackaddress}",
+          "sourceidentificationcode": "{sourceidentificationcode}",    
+          "accountCodeLocators": "{accountCodeLocators}",
+          "isFetchDetailsRequired":"{isFetchDetailsRequired}",
+          "channelCreateRequest":"{channelCreateRequest}",
+          "isIncident":"{isIncident}",
+          "isMajor":"{isMajor}",
+          "additionalProperties": "{additionalProperties}",
+          "isAccountOnboarded":"{isAccountOnboarded}",
+          "blockAction":"{blockAction}",
+          "assignmentEmails":"{assignmentEmails}",
+          "status":"{status}",
+          "extraProp":"{extraProp}"
+          
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "createChannel": [
+          "url",
+          "accountCodeLocators",
+          "sourceidentificationcode",
+          "transactionid",
+          "accountCode",
+          "eventid",
+          "ticketid",
+          "tickettype",
+          "ticketpriority",
+          "ticketdesc",
+          "ticketimpact",
+          "ticketassignmentgroups",
+          "environment",
+          "defaultassignments",
+          "externalcallbackaddress",
+          "isFetchDetailsRequired",
+          "channelCreateRequest",
+          "isIncident",
+          "isMajor",
+          "additionalProperties",
+          "isAccountOnboarded",
+          "blockAction",
+          "assignmentEmails",
+          "status",
+          "extraProp"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/updateTicketInChannel",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "accountCode": "{accountCode}",
+          "locators": "{locators}",
+          "ticketReq":"{ticketReq}"    
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "updateTicketInChannel": [
+          "url",
+          "transactionid",
+          "accountCode",
+          "locators",
+          "ticketReq"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/updateChatOpsTicketStatus",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "accountCode": "{accountCode}",
+          "eventid": "{eventid}",
+          "ticketid": "{ticketid}",
+          "tickettype": "{tickettype}",
+          "ticketpriority": "{ticketpriority}",
+          "ticketdesc": "{ticketdesc}",
+          "ticketimpact": "{ticketimpact}",   
+          "ticketassignmentgroups": "{ticketassignmentgroups}",     
+          "environment": "{environment}",        
+          "status": "{status}",        
+          "statusdescription": "{statusdescription}",      
+          "dashboardstatus": "{dashboardstatus}",  
+          "channelid": "{channelid}",
+          "resolvername": "{resolver}",
+          "resolvetime": "{resolvetime}",
+          "owner": "{owner}",
+          "sourceidentificationcode": "{sourceidentificationcode}",
+          "isMajor":"{isMajor}",
+          "affectedSite":"{affectedSite}",
+          "start_time":"{start_time}",
+          "last_updated_time":"{last_updated_time}",
+          "work_notes":"{work_notes}",
+          "close_notes": "{close_notes}",
+          "breach_time": "{breach_time}",
+          "reported_priority": "{reported_priority}",
+          "incident_url": "{incident_url}",
+          "problem_id": "{problem_id}",
+          "problem_id_url": "{problem_id_url}",
+          "has_breached": "{has_breached}"
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "updateChannel": [
+          "url",
+          "transactionid",
+          "accountCode",
+          "eventid",
+          "ticketid",
+          "tickettype",
+          "ticketpriority",
+          "ticketdesc",
+          "ticketimpact",
+          "ticketassignmentgroups",
+          "environment",
+          "status",
+          "statusdescription",
+          "dashboardstatus",
+          "channelid",
+          "resolver",
+          "resolvetime",
+          "owner",
+          "sourceidentificationcode",
+          "isMajor",
+          "affectedSite",
+          "start_time",
+          "last_updated_time",
+          "work_notes",
+          "close_notes",
+          "breach_time",
+          "reported_priority",
+          "incident_url",
+          "problem_id",
+          "problem_id_url",
+          "has_breached"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/createTicketChannel",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid":"{transactionid}"
+        },
+        "body": {
+          "accountCodeLocators": "{accountCodeLocators}",
+          "ticketid": "{ticketid}",
+          "tickettype": "{tickettype}",
+          "ticketpriority": "{ticketpriority}",
+          "ticketdesc": "{ticketdesc}",
+          "ticketimpact": "{ticketimpact}",
+          "environment": "{environment}",
+          "channelCreateRequest": "{channelCreateRequest}",
+          "eventid": "{eventid}",
+          "ticketassignmentgroups": "{ticketassignmentgroups}"
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "createTicketChannel": [
+          "url",
+          "transactionid",
+          "accountCodeLocators",
+          "ticketid",
+          "tickettype",
+          "ticketpriority",
+          "ticketdesc",
+          "ticketimpact",
+          "environment",
+          "channelCreateRequest",
+          "eventid",
+          "ticketassignmentgroups"
+         
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/acknowledgeMessage",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "msgRequest": "{msgRequest}",
+          "message": "{message}"          
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "updateChannelCreatedStatus": [
+          "url",
+          "transactionid",
+          "msgRequest",
+          "message"         
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/acknowledgeMessage",
+        "headers": {
+          "accept": "application/json",
+          "content-type": "application/json",
+          "transactionid":"{transactionid}"
+        },
+        "body": {
+          "msgRequest": "{msgRequest}",
+          "message": "{message}"
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "acknowledgeMessage": [
+          "url",
+          "transactionid",
+          "msgRequest",
+          "message"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Authorization": "{basicAuthToken}",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"message\": \"{message}\" }"
+      },
+      "functions": {
+        "sendbackCallBackWithAuth": [
+          "basicAuthToken",
+          "url",
+          "transactionid",
+          "message"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Username": "{userName}",
+          "APIkey": "{apiKey}",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"message\": \"{message}\" }"
+      },
+      "functions": {
+        "sendbackCallBackWithApiKey": [
+          "userName",
+          "apiKey",
+          "url",
+          "transactionid",
+          "message"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}",
+        "json": false,
+        "headers": {
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": "{ \"message\": \"{message}\" }"
+      },
+      "functions": {
+        "sendbackCallBackWithoutAuth": [
+          "url",
+          "transactionid",
+          "message"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/fetchOpenTicketInAccount",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "accountCode": "{accountCode}",
+          "sourceId":"{sourceId}",
+          "isSync": "{isSync}",
+          "request":"{request}"
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "fetchOpenTicketInAccount": [
+          "url",
+          "transactionid",
+          "accountCode",
+          "sourceId",
+          "isSync",
+          "request"
+        ]
+      }
+    },
+    {
+      "template": {
+        "method": "POST",
+        "url": "{url}/processPassThroughRequest",
+        "headers": {
+          "accept": "application/json",
+          "Content-Type": "application/json",
+          "transactionid": "{transactionid}"
+        },
+        "body": {
+          "accountCode": "{accountCode}",
+          "passThroughAction":"{passThroughRequestData}",
+          "isSync":"{isSync}"
+        },
+        "responsePath": "$"
+      },
+      "functions": {
+        "callItsmService": [
+          "url",
+          "transactionid",
+          "accountCode",
+          "passThroughRequestData",
+          "isSync"
+        ]
+      }
+    }
+  ]
+}
