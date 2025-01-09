@@ -1,33 +1,36 @@
+---
+# website::tag::1:: Deploy the training/webapp Docker Container: https://hub.docker.com/r/training/webapp/
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld
+  name: hello-world-deployment
 spec:
   selector:
     matchLabels:
-      app: helloworld
-  replicas: 1 # tells deployment to run 1 pods matching the template
-  template: # create pods using pod definition in this template
+      app: hello-world
+  replicas: 1
+  template:
     metadata:
       labels:
-        app: helloworld
+        app: hello-world
     spec:
       containers:
-      - name: helloworld
-        image: karthequian/helloworld:latest
-        ports:
-        - containerPort: 80
+        # website::tag::2:: The container runs a Python webapp on port 5000 that responds with "Hello, World!"
+        - name: hello-world
+          image: training/webapp:latest
+          ports:
+            - containerPort: 5000
 ---
-apiVersion: v1
+# website::tag::3:: Expose the Python webapp on port 5000 via a Kubernetes LoadBalancer.
 kind: Service
+apiVersion: v1
 metadata:
-  name: hello-world
+  name: hello-world-service
 spec:
   selector:
     app: hello-world
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
-      nodePort: 30081   
-  type: NodePort
+      targetPort: 5000
+      port: 5000
+  type: LoadBalancer
