@@ -1,5 +1,3 @@
----
-# website::tag::1:: Deploy the training/webapp Docker Container: https://hub.docker.com/r/training/webapp/
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,17 +18,3 @@ spec:
           image: training/webapp:latest
           ports:
             - containerPort: 5000
----
-# website::tag::3:: Expose the Python webapp on port 5000 via a Kubernetes LoadBalancer.
-kind: Service
-apiVersion: v1
-metadata:
-  name: hello-world-service
-spec:
-  selector:
-    app: hello-world
-  ports:
-    - protocol: TCP
-      targetPort: 5000
-      port: 5000
-  type: LoadBalancer
